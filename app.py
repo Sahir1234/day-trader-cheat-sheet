@@ -1,4 +1,5 @@
 import sys
+
 from alpha_vantage.timeseries import TimeSeries
 from modules.preprocessor import Preprocessor
 from modules.model import Model
@@ -22,10 +23,10 @@ response = str(input('Plot Stock Data? (y/n) : '))
 if(response == 'y'):
     prep.plot_data(company)
 
+X_pred = prep.remove_current_data()
 x, y = prep.get_data()
 
 print('Constructing Model...')
-
 
 #########################################
 #
@@ -41,9 +42,3 @@ response = str(input('Plot Loss Data? (y/n) : '))
 
 if(response == 'y'):
     reg.plot_loss(loss_history)
-
-test = ts.get_intraday(symbol = company, outputsize='compact')
-
-print('')
-
-print('TEST')

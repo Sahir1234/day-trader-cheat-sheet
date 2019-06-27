@@ -4,7 +4,9 @@ This project is a machine learning application that uses historical stock data i
 
 ## Data Preprocessing
 
-The data for the model comes from Alpha Vantage through their API (limits to 5 API calls per minute). The data includes the S&P 500 stock index historical data as well as the historical data for a given company. The model currently uses unadjusted opening and closing prices that don't account for dividends and stock splits. The API returns a CSV that needs to be reindexed to make the date its own column. Also, Alpha Vantage only provides S&P 500 data from the year 2000 and onward, so I used Yahoo Finance Data to fill in the rest. The preprocessor reads all of this data and removes the unnecessary features first. It then puts all of the data into a single, organized DataFrame and converts the data types so that they are all consistent.
+The data for the model comes from Alpha Vantage through their API. The data includes the S&P 500 stock index historical data as well as the historical data for a given company. The model currently uses unadjusted opening and closing prices that don't account for dividends and stock splits. The API returns a CSV that needs to be reindexed to make the date its own column. Also, Alpha Vantage only provides S&P 500 data from the year 2000 and onward, so I used Yahoo Finance Data to fill in the rest. The preprocessor reads all of this data and removes the unnecessary features first. It then puts all of the data into a single, organized DataFrame and converts the data types so that they are all consistent.
+
+NOTE: The Alpha Vantage API has a limit of 5 API calls per minute, so the model can only be run once per minute.
 
 ## Model Structure
 

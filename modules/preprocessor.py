@@ -7,15 +7,18 @@
 # If you have questions, contact 'sahir.mody@gmail.com'.
 #
 
+
 # import necessary packages to preprocess the data
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 # This class serves as a preprocessor that analyzes stock data in CSV files
 # and prepares/formats it so that it can be fed directly into the model for
 # training, testing, prediction, etc.
 class Preprocessor (object):
+ 
  
     # Basic constructor that converts the data in a specified CSV file
     # into a Pandas dataframe.
@@ -54,6 +57,7 @@ class Preprocessor (object):
             if(self.df['Date'][0] == self.market_data['Date'][i]):
                 print('Data Aligns! Appending Index Data...')
                 return i
+
 
     # Adds the index data from market_data with corresponding dates
     # to the dataframe with the company-specific data
@@ -129,6 +133,23 @@ class Preprocessor (object):
         print(self.df)
 
     
+    # The API call gives stock data for the current day that we will use to make
+    # predictions on the model. Here, we separate it from the rest of the data that
+    # will be used for training.
+    def remove_current_data(self):
+        
+        current_data = self.df.tail(1)
+        current_data = current_data.reset_index()
+        current_data.drop(columns=['index', 'Close'], inplace=True)
+        
+        self.df.drop(self.df.tail(1).index,inplace=True)
+        
+        print(current_data)
+        print('Current Data Successfully Removed!')
+     
+        return current_data
+    
+    
     # Getter for the data in the correct format so that it can
     # be fed directly into the model
     def get_data(self):
@@ -137,7 +158,8 @@ class Preprocessor (object):
         y = self.df['Close']
     
         return x, y
-
+    
+    
     # Generates a plot of the historical stock price data over time so
     # that the data can be visualized more easily
     def plot_data(self, company_name):

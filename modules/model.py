@@ -1,9 +1,11 @@
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 from keras import Sequential
 from keras.layers import Dense
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error
 
 
 class Model (object):
@@ -51,3 +53,5 @@ class Model (object):
         plt.xlabel('Epoch')
         plt.ylabel('Loss')
         plt.show()
+
+#    def predict
