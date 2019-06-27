@@ -1,4 +1,8 @@
 
+
+
+# Import necessary packages for data manipulation and visualization,
+# model construction and metrics for evaluation
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -7,7 +11,7 @@ from keras.layers import Dense
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 
-
+# This class serves as the
 class Model (object):
 
     def __init__(self, num_inputs):
@@ -32,7 +36,7 @@ class Model (object):
 
     def train_test(self, x, y):
         
-        X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size = 0.2, random_state = 52)
+        X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size = 0.1, random_state = 52)
         
         loss_history = self.model.fit(X_train, Y_train, epochs=100, batch_size=128, verbose=1)
         
@@ -54,4 +58,17 @@ class Model (object):
         plt.ylabel('Loss')
         plt.show()
 
-#    def predict
+    def predict(self, X_pred):
+        
+        Y_pred = self.model.predict(X_pred, verbose=1)
+        
+        closing_price = Y_pred.item(0)
+        
+        print('************************')
+        print('')
+        print('CLOSING PRICE PREDICTION: $' + str(closing_price))
+        print('')
+        print('************************')
+
+        return closing_price
+

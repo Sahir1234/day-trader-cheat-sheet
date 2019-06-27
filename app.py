@@ -26,14 +26,13 @@ if(response == 'y'):
 X_pred = prep.remove_current_data()
 x, y = prep.get_data()
 
-print('Constructing Model...')
-
 #########################################
 #
 # END OF PREPROCESSING, BEGINNING REGRESSION
 #
 ##########################################
 
+print('Constructing Model...')
 reg = Model(len(x.columns))
 
 loss_history = reg.train_test(x, y)
@@ -42,3 +41,12 @@ response = str(input('Plot Loss Data? (y/n) : '))
 
 if(response == 'y'):
     reg.plot_loss(loss_history)
+
+Y_pred = reg.predict(X_pred)
+
+print('')
+print('Recommended Course of Action: ')
+if(Y_pred >= X_pred['Open'][0]):
+    print('BUY')
+else:
+    print('SELL')
