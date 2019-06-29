@@ -32,21 +32,38 @@ x, y = prep.get_data()
 #
 ##########################################
 
-print('Constructing Model...')
-reg = Model(len(x.columns))
+count = int(input('How Many Models Would You Like to Train? '))
 
-loss_history = reg.train_test(x, y)
+prediction_history=[]
 
-response = str(input('Plot Loss Data? (y/n) : '))
+for i in range(0,count):
 
-if(response == 'y'):
-    reg.plot_loss(loss_history)
+    print('Constructing Model...')
+    reg = Model(len(x.columns))
 
-Y_pred = reg.predict(X_pred)
+    loss_history, prediction_history = reg.train(x, y, X_pred)
 
+    response = str(input('Plot Loss Data? (y/n) : '))
+
+    if(response == 'y'):
+        reg.plot_loss(loss_history)
+        reg.plot_prediction_history(prediction_history)
+
+    Y_pred = reg.predict(X_pred)
+    prediction_history.append(Y_pred)
+
+true_prediction = sum(prediction_history)/len(prediction_history)
+
+print(prediction_history)
 print('')
+print('********************')
+print('TRUE PREDICTION: ' + str(true_prediction))
+print('********************')
+print('')
+
 print('Recommended Course of Action: ')
-if(Y_pred >= X_pred['Open'][0]):
+if(true_prediction >= X_pred['Open'][0]):
     print('BUY')
 else:
     print('SELL')
+print('')

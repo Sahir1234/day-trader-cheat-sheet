@@ -1,4 +1,5 @@
 
+
 #
 # IMPORTANT: This preprocessor (and the model as a whole) is meant to be used
 # on historical stock price datasets for individual companies found at Yahoo
@@ -12,6 +13,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import normalize
 
 
 # This class serves as a preprocessor that analyzes stock data in CSV files
@@ -131,7 +133,6 @@ class Preprocessor (object):
         print('')
     
         print(self.df)
-
     
     # The API call gives stock data for the current day that we will use to make
     # predictions on the model. Here, we separate it from the rest of the data that
@@ -158,7 +159,6 @@ class Preprocessor (object):
         y = self.df['Close']
     
         return x, y
-    
     
     # Generates a plot of the historical stock price data over time so
     # that the data can be visualized more easily

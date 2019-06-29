@@ -1,6 +1,5 @@
 
 
-
 # Import necessary packages for data manipulation and visualization,
 # model construction and metrics for evaluation
 import matplotlib.pyplot as plt
@@ -8,8 +7,17 @@ import pandas as pd
 import numpy as np
 from keras import Sequential
 from keras.layers import Dense
+from keras.callbacks import LambdaCallback
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
+
+# Defining some model parameters to improve training and results
+OPTIMIZER = 'adam'
+BATCH_SIZE = 30
+EPOCHS = 150
+INITIALIZER='normal'
+LOSS = 'mean_squared_error'
+ACTIVATION='relu'
 
 # This class serves as the
 class Model (object):
@@ -18,27 +26,41 @@ class Model (object):
         
         self.model = Sequential()
         
-        # The Input Layer :
-        self.model.add(Dense(128, kernel_initializer='normal',input_dim = num_inputs, activation='relu'))
-
-        # The Hidden Layers :
-        self.model.add(Dense(256, kernel_initializer='normal',activation='relu'))
-        self.model.add(Dense(256, kernel_initializer='normal',activation='relu'))
-        self.model.add(Dense(256, kernel_initializer='normal',activation='relu'))
-
-        # The Output Layer :
-        self.model.add(Dense(1, kernel_initializer='normal',activation='linear'))
         
-        self.model.compile(loss='mean_absolute_error', optimizer='adam')
+        # The Input Layer :
+        self.model.add(Dense(16, kernel_initializer=INITIALIZER, input_dim = num_inputs, activation=ACTIVATION))
+
+        
+        # The Hidden Layers :
+        self.model.add(Dense(32, kernel_initializer=INITIALIZER, activation=ACTIVATION))
+        
+        self.model.add(Dense(64, kernel_initializer=INITIALIZER, activation=ACTIVATION))
+        
+        self.model.add(Dense(128, kernel_initializer=INITIALIZER, activation=ACTIVATION))
+        
+        self.model.add(Dense(64, kernel_initializer=INITIALIZER, activation=ACTIVATION))
+        
+        self.model.add(Dense(32, kernel_initializer=INITIALIZER, activation=ACTIVATION))
+        
+        
+        # The Output Layer :
+        self.model.add(Dense(1, kernel_initializer=INITIALIZER, activation='linear'))
+
+        
+        self.model.compile(loss=LOSS, optimizer=OPTIMIZER)
 
         print(self.model.summary())
     
 
-    def train_test(self, x, y):
+    def train(self, x, y, X_pred):
         
         X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size = 0.1, random_state = 52)
         
-        loss_history = self.model.fit(X_train, Y_train, epochs=100, batch_size=128, verbose=1)
+        prediction_history = []
+        
+        callback =  LambdaCallback(on_epoch_end=lambda epoch, logs: prediction_history.append(self.model.predict(X_pred).item(0)))
+        
+        loss_history = self.model.fit(X_train, Y_train, epochs=EPOCHS, batch_size=BATCH_SIZE, verbose=1, callbacks=[callback])
         
         y_pred = self.model.predict(X_test)
         
@@ -48,7 +70,7 @@ class Model (object):
         print('ROOT MEAN SQUARED ERROR: ' + str(rmse))
         print('*****')
         
-        return loss_history
+        return loss_history, prediction_history
     
     def plot_loss(self, loss_history):
     
@@ -57,6 +79,15 @@ class Model (object):
         plt.xlabel('Epoch')
         plt.ylabel('Loss')
         plt.show()
+    
+    def plot_prediction_history(self, prediction_history):
+
+        plt.plot(prediction_history)
+        plt.title('Model Prediction History')
+        plt.xlabel('Epoch')
+        plt.ylabel('Prediction')
+        plt.show()
+    
 
     def predict(self, X_pred):
         
@@ -71,4 +102,3 @@ class Model (object):
         print('************************')
 
         return closing_price
-
