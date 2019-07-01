@@ -41,15 +41,18 @@
 
   <p>
     If you are running the server through the command line, leave the command line
-    window open and simply visit localhost:5000/XXXX in your browser. "XXXX" should
-    be the stock symbol for the company whose stock you want to predict. For example,
-    if you wanted to have the model predict Tesla's closing stock price, you would go
-    to localhost:5000/TSLA. If the program does not respond after two minutes, it means
-    that you have entered an invalid stock symbol. When it runs, you will be able to select
-    how many models you want to train and see visualizations of the data about how the models
-    improved as they train. When the models have finished, their predictions will be averaged
+    window open. Enter the stock symbol of the company you would like to analyze below.
+    If the webpage does not respond after two minutes, it means that you have entered an
+    invalid stock symbol. When it runs, you will be able to select how many models you want to train
+    and see visualizations of the data about how the models improved as they train.
+    When the models have finished, their predictions will be averaged
     to get a final prediction for the closing price of the stock.
   </p>
+
+  <form method="POST">
+    <input name="company">
+    <input type="submit" value="Predict This Stock!">
+  </form>
 
 
 </body>

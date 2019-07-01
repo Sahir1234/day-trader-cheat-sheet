@@ -70,7 +70,7 @@ class Model (object):
         print('ROOT MEAN SQUARED ERROR: ' + str(rmse))
         print('*****')
         
-        return loss_history, prediction_history
+        return loss_history, prediction_history, rmse
     
     def plot_loss(self, loss_history):
     
@@ -80,12 +80,12 @@ class Model (object):
         plt.ylabel('Loss')
         plt.show()
     
-    def plot_prediction_history(self, prediction_history):
-
+    def plot_predictions(self, prediction_history):
+        
         plt.plot(prediction_history)
         plt.title('Model Prediction History')
         plt.xlabel('Epoch')
-        plt.ylabel('Prediction')
+        plt.ylabel('Predictions')
         plt.show()
     
 
