@@ -1,0 +1,57 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Day Trader's Cheat Sheet</title>
+
+  <link rel="stylesheet" type= "text/css" href= "../static/style.css">
+  <link rel="shortcut icon" type="image/x-icon" href="../static/favicon.ico">
+
+  <meta name="description" content="Predict Stock Prices with Machine Learning!">
+  <meta name="author" content="Sahir Mody">
+
+</head>
+
+<body>
+
+  <h1>
+    The Day Trader's Cheat Sheet
+  </h1>
+
+  <h2>
+    What is it?
+  </h2>
+
+  <p>
+    This app is an experiment to see if machine learning could be used to help
+    day traders beat the market. The app is built around a neural network designed
+    to predict the closing price of a stock on any given day. The neural network learns
+    from historical stock data and historical S&P 500 data to derive an algorithm the
+    program can use to make accurate predictions. The model will then predict the closing
+    price for the current day or the last day that the market was open. Day traders can
+    use this information to determine whether or not they should buy a given stock based on
+    how its price will change by the end of the day and maximize daily profits.
+  </p>
+
+  <h2>
+    How do you use it?
+  </h2>
+
+  <p>
+    If you are running the server through the command line, leave the command line
+    window open and simply visit localhost:5000/XXXX in your browser. "XXXX" should
+    be the stock symbol for the company whose stock you want to predict. For example,
+    if you wanted to have the model predict Tesla's closing stock price, you would go
+    to localhost:5000/TSLA. If the program does not respond after two minutes, it means
+    that you have entered an invalid stock symbol. When it runs, you will be able to select
+    how many models you want to train and see visualizations of the data about how the models
+    improved as they train. When the models have finished, their predictions will be averaged
+    to get a final prediction for the closing price of the stock.
+  </p>
+
+
+</body>
+
+</html>

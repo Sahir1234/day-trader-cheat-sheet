@@ -1,15 +1,26 @@
 import sys
-
+from flask import Flask,render_template,url_for,request
 from alpha_vantage.timeseries import TimeSeries
 from modules.preprocessor import Preprocessor
 from modules.model import Model
 
-import matplotlib.pyplot as plt
 
-ts = TimeSeries(key='G55XFTEJRRNFT53F', output_format='pandas')
-company = str(input('Enter Company Stock Symbol: '))
-data, __ = ts.get_daily(symbol=company, outputsize='full')
-index_data, __ = ts.get_daily(symbol='INX', outputsize='full')
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/<company>')
+def analyze(company):
+    ts = TimeSeries(key='G55XFTEJRRNFT53F', output_format='pandas')
+    data, __ = ts.get_daily(symbol=company, outputsize='full')
+    index_data, __ = ts.get_daily(symbol='INX', outputsize='full')
+    return company
+
+if __name__ == '__main__':
+    app.run(debug=True, use_reloader=False)
+
 print('DATA RETRIEVED!')
 
 prep = Preprocessor(data, index_data)
@@ -59,11 +70,4 @@ print('')
 print('********************')
 print('TRUE PREDICTION: ' + str(true_prediction))
 print('********************')
-print('')
-
-print('Recommended Course of Action: ')
-if(true_prediction >= X_pred['Open'][0]):
-    print('BUY')
-else:
-    print('SELL')
 print('')

@@ -1,0 +1,41 @@
+html {
+  margin: 0;
+  padding: 0;
+  font-size: 1.25em;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.0;
+  font-family: "Lucida Console", Monaco, monospace;
+}
+
+body {
+  background-image: url("background.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+
+h1 {
+  width: auto;
+  color: slategray;
+  font-size: 3.25em;
+  text-decoration: underline;
+}
+
+h2 {
+  width: auto;
+  color: white;
+  font-size: 2.25em;
+  text-shadow: 3px 3px black;
+}
+
+p {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1000px;
+  text-align: justify;
+  color: skyblue;
+  background-color: black;
+  padding: 25px;
+}
