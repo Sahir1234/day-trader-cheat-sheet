@@ -1,5 +1,3 @@
-
-
 #
 # IMPORTANT: This preprocessor (and the model as a whole) is meant to be used
 # on historical stock price datasets for individual companies found at Yahoo
@@ -7,7 +5,6 @@
 # no missing data and company stock data that begins after January 3, 1950.
 # If you have questions, contact 'sahir.mody@gmail.com'.
 #
-
 
 # import necessary packages to preprocess the data
 import pandas as pd
@@ -27,6 +24,7 @@ class Preprocessor (object):
     def __init__ (self, data, index_data):
         
         self.df = data
+        print('DATA RETRIEVED!')
         
         # Remove the unnecessary data and restructure the date index of the data
         self.df.drop(columns = ['2. high', '3. low', '5. volume'], inplace=True)
@@ -112,8 +110,7 @@ class Preprocessor (object):
         # output is on the rightmost column of the DataFrame
         self.df = self.df.reindex(columns=['Year','Month','Day','Open','Index','Close'])
         print('Time Data Formatted! Converting Data Types...')
-        
-        
+    
     # Convert data types of the date data so that all of the inputs
     # have the same data type for model training
     def convert_data_types(self):
@@ -127,11 +124,11 @@ class Preprocessor (object):
             print(type(self.df[str][0]))
             if not isinstance(self.df[str][0], float):
                 raise RuntimeError('Unknown Error when converting data types')
-
+        
         print('')
         print('**** PREPROCESSING COMPLETE ****')
         print('')
-    
+        
         print(self.df)
     
     # The API call gives stock data for the current day that we will use to make
@@ -156,22 +153,6 @@ class Preprocessor (object):
     def get_data(self):
         
         x  = self.df.drop(columns='Close')
-        y = self.df['Close']
+        y = self.df.drop(columns=['Year','Month','Day','Open','Index'])
     
         return x, y
-    
-    # Generates a plot of the historical stock price data over time so
-    # that the data can be visualized more easily
-    def plot_data(self, company_name):
-
-        print('')
-        print('CREATING DATA PLOT...')
-        print('')
-
-        prices = self.df['Close']
-
-        plt.plot(range(0, len(prices)), prices)
-        plt.xlabel('Business Days Since Stock Opened')
-        plt.ylabel('Price')
-        plt.title(company_name +' Stock Prices Over Time')
-        plt.show()

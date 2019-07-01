@@ -6,7 +6,7 @@ html {
   text-align: center;
   line-height: 1.0;
   font-family: "Lucida Console", Monaco, monospace;
-  color: white;
+  color: lightgreen;
 }
 
 body {
@@ -21,11 +21,13 @@ h1 {
   font-size: 3.25em;
   text-decoration: underline;
   font-family: Georgia, Helvetica, serif;
+  color: white;
 }
 
 h2 {
   width: auto;
   font-size: 2.25em;
+  color: white;
   text-shadow: 3px 3px green;
 }
 
@@ -35,6 +37,6 @@ p {
   margin-right: auto;
   max-width: 1000px;
   text-align: justify;
-  color: lightgreen;
+
   line-height: 1.25em;
 }

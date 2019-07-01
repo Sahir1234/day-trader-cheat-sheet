@@ -24,6 +24,7 @@ class Model (object):
 
     def __init__(self, num_inputs):
         
+        print('Constructing Model...')
         self.model = Sequential()
         
         
@@ -50,8 +51,8 @@ class Model (object):
         self.model.compile(loss=LOSS, optimizer=OPTIMIZER)
 
         print(self.model.summary())
-    
 
+    
     def train(self, x, y, X_pred):
         
         X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size = 0.1, random_state = 52)
@@ -70,25 +71,8 @@ class Model (object):
         print('ROOT MEAN SQUARED ERROR: ' + str(rmse))
         print('*****')
         
-        return loss_history, prediction_history, rmse
+        return loss_history.history['loss'], prediction_history, rmse
     
-    def plot_loss(self, loss_history):
-    
-        plt.plot(loss_history.history['loss'])
-        plt.title('Model Loss History')
-        plt.xlabel('Epoch')
-        plt.ylabel('Loss')
-        plt.show()
-    
-    def plot_predictions(self, prediction_history):
-        
-        plt.plot(prediction_history)
-        plt.title('Model Prediction History')
-        plt.xlabel('Epoch')
-        plt.ylabel('Predictions')
-        plt.show()
-    
-
     def predict(self, X_pred):
         
         Y_pred = self.model.predict(X_pred, verbose=1)
