@@ -52,15 +52,18 @@ def analyze(company):
 
     predictions=[]
     errors=[]
-    prediction_data =[]
+
+    global prediction_json
+    prediction_json = []
 
     for i in range(0,count):
     
         reg = Model(len(x.columns))
     
-        loss_history, prediction_history, rmse = reg.train(x, y, X_pred)
-        
-        prediction_data.append(prediction_history)
+        prediction_history, rmse = reg.train(x, y, X_pred)
+    
+        prediction_history.insert(0, 'Model '+ str(i+1))
+        prediction_json.append(prediction_history)
         
         Y_pred = reg.predict(X_pred)
         predictions.append(Y_pred)
@@ -77,13 +80,16 @@ def analyze(company):
     print('********************')
     print('')
     print('True Error: ' + str(true_error))
-    print(type(prediction_data))
+    print('')
+
+#    global prediction_json
+#   prediction_json = json.dumps(prediction_data)
 
     return redirect('/' + company + '/' + str(count) + '/' 'results')
 
 @app.route('/<company>/<count>/results')
 def show_results(company, count):
-    return render_template('results.html', company = company, count = count, true_prediction = true_prediction, true_error = true_error)
+    return render_template('results.html', company = company, count = count, true_prediction = true_prediction, true_error = true_error, prediction_json = prediction_json)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False)

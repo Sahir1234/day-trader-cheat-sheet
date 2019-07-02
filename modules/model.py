@@ -59,9 +59,9 @@ class Model (object):
         
         prediction_history = []
         
-        callback =  LambdaCallback(on_epoch_end=lambda epoch, logs: prediction_history.append(self.model.predict(X_pred).item(0)))
+        callback = LambdaCallback(on_epoch_end=lambda epoch, logs: prediction_history.append(self.model.predict(X_pred).item(0)))
         
-        loss_history = self.model.fit(X_train, Y_train, epochs=EPOCHS, batch_size=BATCH_SIZE, verbose=1, callbacks=[callback])
+        self.model.fit(X_train, Y_train, epochs=EPOCHS, batch_size=BATCH_SIZE, verbose=1, callbacks=[callback])
         
         y_pred = self.model.predict(X_test)
         
@@ -71,7 +71,7 @@ class Model (object):
         print('ROOT MEAN SQUARED ERROR: ' + str(rmse))
         print('*****')
         
-        return loss_history.history['loss'], prediction_history, rmse
+        return prediction_history, rmse
     
     def predict(self, X_pred):
         

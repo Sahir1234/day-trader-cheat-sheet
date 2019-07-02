@@ -12,6 +12,13 @@
   <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='style.css')}}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico')}}">
 
+  <!-- Load c3.css -->
+  <link href="{{ url_for('static', filename='c3.css')}}" rel="stylesheet">
+
+  <!-- Load d3.js and c3.js -->
+  <script src="{{ url_for('static', filename='d3.v5.min.js')}}" charset="utf-8"></script>
+  <script src="{{ url_for('static', filename='c3.min.js')}}"></script>
+
 </head>
 
 <body>
@@ -23,22 +30,55 @@
   <p>
     {{ count }} model(s) succesfully trained and tested!
     <br></br>
-    <br></br>
   </p>
 
-  <h2>
-    Final Prediction: {{ true_prediction }}
-  </h2>
+  <div id="chart"></div>
 
-  <p>
-    with an approximate RMSE of {{ true_error }}
-  <p>
+  <h2>
+    Final Prediction: ${{ true_prediction }}
+  </h2>
 
   <p style="text-align: center">
     <br></br>
+    <a style="text-decoration: none; font-size: 1.4em; color: white" href={{ url_for('home') }}>CLICK HERE TO MAKE ANOTHER PREDICTION!</a>
     <br></br>
-    <a style="text-decoration: none; font-size: 1.5em; color: white" href={{ url_for('home') }}>CLICK HERE </a>
   </p>
+
+  <script>
+    var predictionData = {{ prediction_json|tojson}};
+    var chart = c3.generate({
+      bindto: '#chart',
+      data: {
+        columns: predictionData
+      },
+      axis: {
+        y: {
+          label: {
+            text: 'Prediction',
+            position: 'outer-middle'
+          }
+        },
+        x: {
+          label: {
+            text: 'Epoch of Training',
+            position: 'outer-middle'
+          }
+        }
+      },
+      oninit: function() {
+        d3
+          .select('#chart')
+          .select('svg')
+          .append('text')
+          .attr('x','50%')
+          .attr('y','5%')
+          .style('text-anchor', 'middle')
+          .style('font-size', '30px')
+          .text("Prediction History of Each Model")
+      }
+    });
+
+  </script>
 
 
 </body>
