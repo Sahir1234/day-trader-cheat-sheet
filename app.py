@@ -1,5 +1,4 @@
 
-import os
 import json
 import pandas as pd
 from flask import Flask, render_template, url_for, request, redirect
@@ -31,12 +30,11 @@ def get_data(company):
     prep.split_date_features()
     prep.convert_data_types()
 
+    global X_pred
+    global x
+    global y
     X_pred = prep.remove_current_data()
     x, y = prep.get_data()
-    
-    X_pred.to_csv('X_pred.csv', index=False)
-    x.to_csv('x.csv', index= False)
-    y.to_csv('y.csv', index=False)
     
     return render_template('page.html', company=company)
 
@@ -48,13 +46,6 @@ def analyze(company):
             count = 1
     except ValueError:
         count = 1
-
-    X_pred = pd.read_csv('X_pred.csv')
-    x = pd.read_csv('x.csv')
-    y = pd.read_csv('y.csv')
-    os.remove('X_pred.csv')
-    os.remove('x.csv')
-    os.remove('y.csv')
 
     predictions=[]
     errors=[]
