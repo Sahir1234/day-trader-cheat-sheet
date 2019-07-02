@@ -82,9 +82,6 @@ def analyze(company):
     print('True Error: ' + str(true_error))
     print('')
 
-#    global prediction_json
-#   prediction_json = json.dumps(prediction_data)
-
     return redirect('/' + company + '/' + str(count) + '/' 'results')
 
 @app.route('/<company>/<count>/results')
