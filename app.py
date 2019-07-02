@@ -20,9 +20,12 @@ def get_company():
 @app.route('/<company>')
 def get_data(company):
     
-    ts = TimeSeries(key='G55XFTEJRRNFT53F', output_format='pandas')
-    data, __ = ts.get_daily(symbol=company, outputsize='full')
-    index_data, __ = ts.get_daily(symbol='INX', outputsize='full')
+    try:
+        ts = TimeSeries(key='G55XFTEJRRNFT53F', output_format='pandas')
+        data, __ = ts.get_daily(symbol=company, outputsize='full')
+        index_data, __ = ts.get_daily(symbol='INX', outputsize='full')
+    except KeyError:
+        return redirect('/')
 
     prep = Preprocessor(data, index_data)
     prep.append_SP_data()
@@ -36,7 +39,7 @@ def get_data(company):
     X_pred = prep.remove_current_data()
     x, y = prep.get_data()
     
-    return render_template('page.html', company=company)
+    return render_template('load.html', company=company)
 
 @app.route('/<company>', methods=['POST'])
 def analyze(company):
@@ -49,6 +52,7 @@ def analyze(company):
 
     predictions=[]
     errors=[]
+    prediction_data =[]
 
     for i in range(0,count):
     
@@ -56,12 +60,14 @@ def analyze(company):
     
         loss_history, prediction_history, rmse = reg.train(x, y, X_pred)
         
-        prediction_data = json.dumps(prediction_history)
+        prediction_data.append(prediction_history)
         
         Y_pred = reg.predict(X_pred)
         predictions.append(Y_pred)
         errors.append(rmse)
 
+    global true_prediction
+    global true_error
     true_prediction = sum(predictions)/len(predictions)
     true_error = sum(errors)/len(errors)
 
@@ -71,8 +77,13 @@ def analyze(company):
     print('********************')
     print('')
     print('True Error: ' + str(true_error))
+    print(type(prediction_data))
 
-    return render_template('results.html', company=company, data = predictions)
+    return redirect('/' + company + '/' + str(count) + '/' 'results')
+
+@app.route('/<company>/<count>/results')
+def show_results(company, count):
+    return render_template('results.html', company = company, count = count, true_prediction = true_prediction, true_error = true_error)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False)

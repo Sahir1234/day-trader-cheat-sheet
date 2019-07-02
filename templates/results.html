@@ -6,31 +6,39 @@
   <meta charset="utf-8">
   <title>Day Trader's Cheat Sheet</title>
 
-  <link rel="stylesheet" type= "text/css" href= "../static/style.css">
-  <link rel="shortcut icon" type="image/x-icon" href="../static/favicon.ico">
-
   <meta name="description" content="Predict Stock Prices with Machine Learning!">
   <meta name="author" content="Sahir Mody">
 
-  <script src="../static/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='style.css')}}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico')}}">
 
 </head>
 
 <body>
 
   <h1 style="text-decoration: none">
-    {{ company }}
+    RESULTS FOR {{ company }}:
   </h1>
 
   <p>
-    <a style="text-decoration: underline; font-size: 2em; color: white" href={{ url_for('home') }}>HOME</a>
+    {{ count }} model(s) succesfully trained and tested!
+    <br></br>
     <br></br>
   </p>
 
   <h2>
-    Results:
+    Final Prediction: {{ true_prediction }}
   </h2>
 
+  <p>
+    with an approximate RMSE of {{ true_error }}
+  <p>
+
+  <p style="text-align: center">
+    <br></br>
+    <br></br>
+    <a style="text-decoration: none; font-size: 1.5em; color: white" href={{ url_for('home') }}>CLICK HERE </a>
+  </p>
 
 
 </body>

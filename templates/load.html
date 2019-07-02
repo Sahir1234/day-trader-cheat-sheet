@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Day Trader's Cheat Sheet</title>
+
+  <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='style.css')}}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico')}}">
+
+  <meta name="description" content="Predict Stock Prices with Machine Learning!">
+  <meta name="author" content="Sahir Mody">
+
+  <script src="{{ url_for('static', filename='jquery-3.4.1.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='script.js')}}"></script>
+
+</head>
+
+<body>
+
+  <h1 style="text-decoration: none">
+    {{ company }}
+  </h1>
+
+  <p>
+    <br></br>
+    The data has been retrieved and preprocessed successfully! You can now begin to
+    train the models. You can track the progress of the training by observing the terminal window
+    where the application server is running. Below you can enter the number of models you
+    would like to train. 3-5 models is generally recommended.
+    <br></br>
+  </p>
+
+  <p>
+     PLEASE BE EXTREMELY PATIENT AS IT TAKES ABOUT A MINUTE TO TRAIN EACH MODEL!
+     <br></br>
+     <br></br>
+  </p>
+
+  <p id="modelPrompt">
+    NUMBER OF MODELS:
+  </p>
+  <form method="POST" class="submission">
+      <input name="count">
+      <input type="submit" value="Train Models!">
+  </form>
+
+
+</body>
+
+</html>

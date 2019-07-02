@@ -6,14 +6,14 @@
   <meta charset="utf-8">
   <title>Day Trader's Cheat Sheet</title>
 
-  <link rel="stylesheet" type= "text/css" href= "../static/style.css">
-  <link rel="shortcut icon" type="image/x-icon" href="../static/favicon.ico">
+  <link rel="stylesheet" type= "text/css" href= "{{ url_for('static', filename='style.css')}}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico')}}">
 
   <meta name="description" content="Predict Stock Prices with Machine Learning!">
   <meta name="author" content="Sahir Mody">
 
-  <script src="../static/jquery-3.4.1.min.js"></script>
-  <script src="../static/script.js"></script>
+  <script src="{{ url_for('static', filename='jquery-3.4.1.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='script.js')}}"></script>
 
 </head>
 
@@ -44,13 +44,15 @@
   <p>
     If you are running the server through the command line, leave the command line
     window open. Enter the stock symbol of the company you would like to analyze below.
-    Please be patient as it may take a moment for the page to load. If you enter an invalid
-    stock symbol, a key error will be thrown and you will have to restart the app. Once the page loads,
-    please follow the instructions on-screen.
+    If you enter an invalid stock symbol, you will be redirected back to this page.
+    Please be patient as it may take a moment for the page to load. Once the page loads,
+    please follow the instructions.
   </p>
 
-  <form method="POST" class="submission">
+  <p id="stockPrompt">
     ENTER STOCK SYMBOL HERE:
+  </p>
+  <form method="POST" class="submission">
     <input name="company" placeholder="GOOGL">
     <input type="submit" value="Predict This Stock!">
   </form>
