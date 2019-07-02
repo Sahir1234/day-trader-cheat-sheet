@@ -1,5 +1,6 @@
 
 import os
+import json
 import pandas as pd
 from flask import Flask, render_template, url_for, request, redirect
 from alpha_vantage.timeseries import TimeSeries
@@ -64,6 +65,8 @@ def analyze(company):
     
         loss_history, prediction_history, rmse = reg.train(x, y, X_pred)
         
+        prediction_data = json.dumps(prediction_history)
+        
         Y_pred = reg.predict(X_pred)
         predictions.append(Y_pred)
         errors.append(rmse)
@@ -78,7 +81,7 @@ def analyze(company):
     print('')
     print('True Error: ' + str(true_error))
 
-    return str(true_prediction)
+    return render_template('page.html', company=company, data = predictions)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False)
