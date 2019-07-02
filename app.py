@@ -81,7 +81,7 @@ def analyze(company):
     print('')
     print('True Error: ' + str(true_error))
 
-    return render_template('page.html', company=company, data = predictions)
+    return render_template('results.html', company=company, data = predictions)
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=False)
