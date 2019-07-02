@@ -12,7 +12,7 @@
 .c3 text {
   stroke: white;
   fill: white;
-  font-size: 17px;
+  font-size: 14px;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
@@ -41,22 +41,13 @@
 }
 
 /*-- Axis --*/
-
-path.domain {
-  stroke: white;
-}
-
-.tick text {
-  stroke: white;
-}
-
 /*-- Grid --*/
 .c3-grid line {
-  stroke: white;
+  stroke: #aaa;
 }
 
 .c3-grid text {
-  fill: white;
+  fill: #aaa;
 }
 
 .c3-xgrid, .c3-ygrid {
@@ -65,7 +56,7 @@ path.domain {
 
 /*-- Text on Chart --*/
 .c3-text.c3-empty {
-  fill: white;
+  fill: #808080;
   font-size: 2em;
 }
 
@@ -82,12 +73,12 @@ path.domain {
 
 .c3-selected-circle {
   fill: white;
-  stroke-width: 3px;
+  stroke-width: 2px;
 }
 
 /*-- Bar --*/
 .c3-bar {
-  stroke-width: 1;
+  stroke-width: 0;
 }
 
 .c3-bar._expanded_ {
@@ -101,7 +92,7 @@ path.domain {
 }
 
 .c3-target.c3-focused path.c3-line, .c3-target.c3-focused path.c3-step {
-  stroke-width: 4px;
+  stroke-width: 5px;
 }
 
 .c3-target.c3-defocused {
@@ -122,11 +113,7 @@ path.domain {
 /*-- Select - Drag --*/
 /*-- Legend --*/
 .c3-legend-item {
-  font-size: 17px;
-}
-
-.c3-legend-item text {
-  stroke: white
+  font-size: 12px;
 }
 
 .c3-legend-item-hidden {
@@ -136,7 +123,7 @@ path.domain {
 .c3-legend-background {
   opacity: 0.75;
   fill: white;
-  stroke: white;
+  stroke: lightgray;
   stroke-width: 1;
 }
 
@@ -166,7 +153,7 @@ path.domain {
 }
 
 .c3-tooltip th {
-  background-color: #aaa;
+  background-color: black;
   font-size: 14px;
   padding: 2px 5px;
   text-align: left;
@@ -176,7 +163,7 @@ path.domain {
 .c3-tooltip td {
   font-size: 13px;
   padding: 3px 6px;
-  background-color: #fff;
+  background-color: black;
   border-left: 1px dotted #999;
 }
 

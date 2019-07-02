@@ -13,7 +13,7 @@
   <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico')}}">
 
   <!-- Load c3.css -->
-  <link href="{{ url_for('static', filename='c3.css')}}" rel="stylesheet">
+  <link rel="stylesheet" type= "text/css" href="{{ url_for('static', filename='c3.css')}}">
 
   <!-- Load d3.js and c3.js -->
   <script src="{{ url_for('static', filename='d3.v5.min.js')}}" charset="utf-8"></script>
@@ -48,6 +48,10 @@
     var predictionData = {{ prediction_json|tojson}};
     var chart = c3.generate({
       bindto: '#chart',
+      size: {
+        height: 500,
+        width: 1000
+      },
       data: {
         columns: predictionData
       },
@@ -73,7 +77,7 @@
           .attr('x','50%')
           .attr('y','5%')
           .style('text-anchor', 'middle')
-          .style('font-size', '30px')
+          .style('font-size', '20px')
           .text("Prediction History of Each Model")
       }
     });
