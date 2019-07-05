@@ -82,7 +82,7 @@ def analyze(company):
     # it to 1 if the user entered something besides a positive integer
     try:
         count = int(request.form['count'])
-        if(count <= 0 || count > 3):
+        if(count <= 0 or count > 3):
             count = 1
     except ValueError:
         count = 1
