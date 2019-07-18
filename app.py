@@ -1,8 +1,8 @@
-
+import os
 import json
 import pandas as pd
 
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, session
 
 from alpha_vantage.timeseries import TimeSeries
 
@@ -56,12 +56,13 @@ def get_data(company):
     prep.split_date_features()
     prep.convert_data_types()
 
-    # Global variables required so that the data can be used in multiple routes
-    global X_pred
-    global x
-    global y
     X_pred = prep.remove_current_data()
     x, y = prep.get_data()
+
+    # We store this data locally because it is too big to be stored as a browser cookie
+    X_pred.to_csv('prediction_data.csv', index=False)
+    x.to_csv('x.csv', index=False)
+    y.to_csv('y.csv', index=False)
     
     return render_template('load.html', company=company)
 
@@ -87,13 +88,20 @@ def analyze(company):
     except ValueError:
         count = 1
 
+    # Reading the data stored locally and then cleaning out the filesystem
+    X_pred = pd.read_csv('prediction_data.csv')
+    x = pd.read_csv('x.csv')
+    y = pd.read_csv('y.csv')
+    os.remove('prediction_data.csv')
+    os.remove('x.csv')
+    os.remove('y.csv')
+
     # Stores the final prediction and error of each model after it has
     # completed all of the epochs of traing
     predictions=[]
     errors=[]
 
     # Stores the predictions each model makes after each epoch
-    global prediction_json
     prediction_json = []
 
     for i in range(0,count):
@@ -111,10 +119,14 @@ def analyze(company):
 
 
     # Average the predictions to get the final or "true" prediction/error
-    global true_prediction
-    global true_error
     true_prediction = sum(predictions)/len(predictions)
     true_error = sum(errors)/len(errors)
+
+    # Saving result data so that it can be used in the next route
+    session['predictions'] = prediction_json
+    session['true_prediction'] = true_prediction
+    session['true_error'] = true_error
+
 
     print('')
     print('********************')
@@ -139,9 +151,10 @@ def show_results(company, count):
             count(int): the amount of models that the user asked to be trained
     """
     
-    return render_template('results.html', company = company, count = count, true_prediction = true_prediction, true_error = true_error, prediction_json = prediction_json)
+    return render_template('results.html', company = company, count = count, true_prediction = session.get('true_prediction', None), true_error = session.get('true_error', None), prediction_json = session.get('predictions', None))
 
 
 
 if __name__ == '__main__':
+    app.secret_key = 'SHHH ITS A SECRET'
     app.run(debug=True, use_reloader=False)
