@@ -44,7 +44,7 @@ def get_data(company):
     # if the user selected a stock that doesn't exist, they will be redirected back to
     # the start page and prompted to enter a stock symbol again
     try:
-        ts = TimeSeries(key='G55XFTEJRRNFT53F', output_format='pandas')
+        ts = TimeSeries(key='ENTERAPIKEYHERE', output_format='pandas')
         data, __ = ts.get_daily(symbol=company, outputsize='full')
         index_data, __ = ts.get_daily(symbol='INX', outputsize='full')
     except KeyError:
